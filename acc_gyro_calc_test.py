@@ -18,6 +18,7 @@ from scipy.optimize import curve_fit
 import math
 import sklearn
 #%%
+from ahrs.filters import Madgwick
 # %%
 os.path.dirname(__file__)
 # %%
@@ -26,5 +27,12 @@ folder = "./csv_noise"
 file = folder+"/IMU_calibrated.csv"
 data=np.loadtxt(file, delimiter=',')
 # %%
-data
+acc_data=data[:,[2,3,4]]
+gyro_data=data[:,[5,6,7]]
+# %%
+madgwick = Madgwick(gyr=gyro_data, acc=acc_data)     # Using IMU
+# %%
+type(madgwick.Q), madgwick.Q.shape
+# %%
+madgwick.Q
 # %%
